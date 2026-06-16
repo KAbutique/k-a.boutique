@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Contáctenos - K'A Boutique</title>
+
+    <!-- Firebase 8.10.1 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #7209b7;
+            --light-color: #f8f9fa;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .main-header {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            font-weight: 800;
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+        }
+        .navbar-nav .nav-link {
+            color: #333;
+            font-weight: 500;
+        }
+        .navbar-nav .nav-link.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        .main-footer {
+            background-color: #222;
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: auto;
+        }
+        .main-footer a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .main-footer a:hover {
+            color: white;
+        }
+        .contact-container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .contact-title {
+            color: var(--secondary-color);
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        .contact-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+        .contact-icon {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            width: 50px;
+            text-align: center;
+            margin-right: 15px;
+        }
+        .contact-form .form-control, .contact-form .form-select {
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #e1e5eb;
+            margin-bottom: 20px;
+        }
+        .contact-form .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(67,97,238,0.25);
+        }
+        .btn-send {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s;
+        }
+        .btn-send:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67,97,238,0.4);
+        }
+        .map-container {
+            margin-top: 40px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #e1e5eb;
+        }
+        @media (max-width: 768px) {
+            .contact-container {
+                padding: 25px;
+                margin: 30px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header" id="mainHeader">
+        <nav class="navbar navbar-expand-lg navbar-light py-3">
+            <div class="container">
+                <a class="navbar-brand logo" href="index.html">
+                    <i class="fas fa-gem me-2"></i><span id="storeNameHeader">K'A Boutique</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html">Joyas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html">Vestimenta</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html">Perfumes</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html">Accesorios</a></li>
+                        <li class="nav-item"><a class="nav-link" href="acerca.html">Acerca de</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="contacto.html">Contáctenos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="politicas.html">Políticas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="mision.html">Misión</a></li>
+                        <li class="nav-item"><a class="nav-link" href="vision.html">Visión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="contact-container">
+            <h1 class="contact-title">Contáctenos</h1>
+            <p class="lead mb-5">Estamos aquí para ayudarte. Completa el formulario o utiliza cualquiera de nuestros canales de comunicación.</p>
+
+            <div class="row">
+                <div class="col-lg-5 mb-5 mb-lg-0">
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h5>Dirección</h5>
+                            <p class="text-muted mb-0" id="contactAddress">Av. Principal 123, Oficina 402<br>Ciudad, CP 10001</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                        <div>
+                            <h5>Teléfono / WhatsApp</h5>
+                            <p class="text-muted mb-0" id="contactPhone">+1 (234) 567 890<br>Atención: Lun-Vie 9:00-18:00</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h5>Correo Electrónico</h5>
+                            <p class="text-muted mb-0" id="contactEmail">
+                                <strong>Ventas:</strong> ventas@luxuryshop.com<br>
+                                <strong>Soporte:</strong> soporte@luxuryshop.com<br>
+                                <strong>Privacidad:</strong> privacidad@luxuryshop.com
+                            </p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                        <div>
+                            <h5>Horario de Atención</h5>
+                            <p class="text-muted mb-0">Lunes a Viernes: 9:00 - 18:00<br>Sábados: 10:00 - 14:00</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <h5 class="mb-3">Síguenos en redes</h5>
+                        <a href="#" class="btn btn-outline-primary me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="btn btn-outline-primary me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="btn btn-outline-primary me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="btn btn-outline-primary"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="card border-0 bg-light p-4">
+                        <h4 class="mb-4">Envíanos un mensaje</h4>
+                        <form id="contactForm" onsubmit="event.preventDefault(); alert('Gracias por contactarnos. Te responderemos a la brevedad.');">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="name" class="form-label">Nombre completo *</label>
+                                    <input type="text" class="form-control" id="name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Correo electrónico *</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <label for="phone" class="form-label">Teléfono (opcional)</label>
+                                <input type="tel" class="form-control" id="phone">
+                            </div>
+                            <div class="mt-3">
+                                <label for="subject" class="form-label">Asunto *</label>
+                                <select class="form-select" id="subject" required>
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="consulta">Consulta general</option>
+                                    <option value="pedido">Problema con mi pedido</option>
+                                    <option value="devolucion">Devolución o cambio</option>
+                                    <option value="sugerencia">Sugerencia</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+                            <div class="mt-3">
+                                <label for="message" class="form-label">Mensaje *</label>
+                                <textarea class="form-control" id="message" rows="5" required></textarea>
+                            </div>
+                            <div class="mt-4">
+                                <button type="submit" class="btn btn-send w-100">
+                                    <i class="fas fa-paper-plane me-2"></i> Enviar mensaje
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="map-container">
+                <div style="background: #e1e5eb; height: 300px; display: flex; align-items: center; justify-content: center; color: #666; flex-direction: column;">
+                    <i class="fas fa-map-marked-alt fa-3x mb-3" style="color: var(--primary-color);"></i>
+                    <h5>Nuestra ubicación</h5>
+                    <p class="mb-0" id="mapAddress">Av. Principal 123, Ciudad</p>
+                    <p class="small text-muted mt-2">* Integración con Google Maps disponible próximamente.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer" id="mainFooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <h4 class="logo mb-3"><i class="fas fa-gem"></i> <span id="footerStoreName">K'A Boutique</span></h4>
+                    <p>Tu tienda online de confianza para productos exclusivos de alta calidad.</p>
+                    <div class="mt-3">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-twitter fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Categorías</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white-50 text-decoration-none">Joyas</a></li>
+                        <li><a href="index.html" class="text-white-50 text-decoration-none">Vestimenta</a></li>
+                        <li><a href="index.html" class="text-white-50 text-decoration-none">Perfumes</a></li>
+                        <li><a href="index.html" class="text-white-50 text-decoration-none">Accesorios</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Contacto</h5>
+                    <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i> <span id="footerAddress">Av. Principal 123, Ciudad</span></p>
+                    <p class="mb-1"><i class="fas fa-phone me-2"></i> <span id="footerPhone">+1 234 567 890</span></p>
+                    <p class="mb-1"><i class="fas fa-envelope me-2"></i> <span id="footerEmail">info@luxuryshop.com</span></p>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Información</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="acerca.html" class="text-white-50 text-decoration-none">Acerca de Nosotros</a></li>
+                        <li><a href="contacto.html" class="text-white-50 text-decoration-none">Contáctenos</a></li>
+                        <li><a href="politicas.html" class="text-white-50 text-decoration-none">Políticas de Privacidad</a></li>
+                        <li><a href="mision.html" class="text-white-50 text-decoration-none">Misión</a></li>
+                        <li><a href="vision.html" class="text-white-50 text-decoration-none">Visión</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="bg-white-50">
+            <div class="text-center pt-3">
+                <p class="mb-0">&copy; <span id="copyrightYear">2023</span> <span id="copyrightName">K'A Boutique</span>. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyANa6zWkGrYQ7O7M6XT2oYbArsZIcs36M8",
+            authDomain: "trip-a9341.firebaseapp.com",
+            databaseURL: "https://trip-a9341-default-rtdb.firebaseio.com",
+            projectId: "trip-a9341",
+            storageBucket: "trip-a9341.appspot.com",
+            messagingSenderId: "379336201132",
+            appId: "1:379336201132:web:34b0b863c3462c12aba009",
+            measurementId: "G-PJQ32ZXJ0B"
+        };
+
+        let firebaseApp, firebaseDatabase;
+        
+        try {
+            firebaseApp = firebase.initializeApp(firebaseConfig);
+            firebaseDatabase = firebase.database();
+            console.log("Firebase inicializado correctamente");
+        } catch (error) {
+            console.error("Error inicializando Firebase:", error);
+        }
+
+        function loadStoreSettings() {
+            if (!firebaseDatabase) return;
+            firebaseDatabase.ref('settings').once('value').then(snapshot => {
+                const settings = snapshot.val() || {};
+                const general = settings.general || {};
+                
+                document.title = general.storeName || 'Contáctenos - K'A Boutique';
+                
+                const storeNameHeader = document.getElementById('storeNameHeader');
+                const footerStoreName = document.getElementById('footerStoreName');
+                const copyrightName = document.getElementById('copyrightName');
+                
+                const storeName = general.storeName || 'K'A Boutique';
+                if (storeNameHeader) storeNameHeader.textContent = storeName;
+                if (footerStoreName) footerStoreName.textContent = storeName;
+                if (copyrightName) copyrightName.textContent = storeName;
+                
+                const address = general.storeAddress || 'Av. Principal 123, Ciudad';
+                const phone = general.storePhone || '+1 234 567 890';
+                const email = general.storeEmail || 'info@luxuryshop.com';
+                
+                const contactAddress = document.getElementById('contactAddress');
+                const contactPhone = document.getElementById('contactPhone');
+                const contactEmail = document.getElementById('contactEmail');
+                const mapAddress = document.getElementById('mapAddress');
+                const footerAddress = document.getElementById('footerAddress');
+                const footerPhone = document.getElementById('footerPhone');
+                const footerEmail = document.getElementById('footerEmail');
+                
+                if (contactAddress) contactAddress.innerHTML = address + '<br>Ciudad, CP 10001';
+                if (contactPhone) contactPhone.innerHTML = phone + '<br>Atención: Lun-Vie 9:00-18:00';
+                if (contactEmail) contactEmail.innerHTML = `<strong>Ventas:</strong> ${email}<br><strong>Soporte:</strong> soporte@${email.split('@')[1]}<br><strong>Privacidad:</strong> privacidad@${email.split('@')[1]}`;
+                if (mapAddress) mapAddress.textContent = address;
+                if (footerAddress) footerAddress.textContent = address;
+                if (footerPhone) footerPhone.textContent = phone;
+                if (footerEmail) footerEmail.textContent = email;
+                
+                const copyrightYear = document.getElementById('copyrightYear');
+                if (copyrightYear) copyrightYear.textContent = new Date().getFullYear();
+            }).catch(error => console.error('Error cargando configuración:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStoreSettings();
+        });
+    </script>
+</body>
+</html>

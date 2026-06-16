@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Acerca de Nosotros - K'A Boutique</title>
+
+    <!-- Firebase 8.10.1 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #7209b7;
+            --light-color: #f8f9fa;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .main-header {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            font-weight: 800;
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+        }
+        .navbar-nav .nav-link {
+            color: #333;
+            font-weight: 500;
+        }
+        .navbar-nav .nav-link.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        .main-footer {
+            background-color: #222;
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: auto;
+        }
+        .main-footer a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .main-footer a:hover {
+            color: white;
+        }
+        .about-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .about-title {
+            color: var(--secondary-color);
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        .about-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .value-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .value-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+        @media (max-width: 768px) {
+            .about-container {
+                padding: 25px;
+                margin: 30px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header" id="mainHeader">
+        <nav class="navbar navbar-expand-lg navbar-light py-3">
+            <div class="container">
+                <a class="navbar-brand logo" href="index.html">
+                    <i class="fas fa-gem me-2"></i><span id="storeNameHeader">K'A Boutique</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html">Joyas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html">Vestimenta</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html">Perfumes</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html">Accesorios</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="acerca.html">Acerca de</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contacto.html">Contáctenos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="politicas.html">Políticas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="mision.html">Misión</a></li>
+                        <li class="nav-item"><a class="nav-link" href="vision.html">Visión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="about-container">
+            <h1 class="about-title">Acerca de <span id="aboutStoreName">K'A Boutique</span></h1>
+            
+            <div class="row align-items-center mb-5">
+                <div class="col-md-6">
+                    <h4>Nuestra Historia</h4>
+                    <p id="storeHistory"><span id="historyStoreName">K'A Boutique</span> nació en 2020 con un sueño: hacer accesibles los productos de alta calidad y diseño exclusivo a compradores de toda América Latina. Lo que comenzó como una pequeña tienda de joyería artesanal se ha convertido en un referente de elegancia, confianza y servicio personalizado.</p>
+                    <p>Hoy, gracias a nuestra plataforma digital y alianzas con diseñadores independientes y marcas reconocidas, ofrecemos una cuidada selección de joyas, vestimenta y perfumes que reflejan las últimas tendencias sin perder la esencia atemporal.</p>
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="https://images.unsplash.com/photo-1531973576160-7125cd663d86?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Nuestro equipo" class="img-fluid rounded-3 shadow" style="max-height: 300px;">
+                </div>
+            </div>
+
+            <h4 class="mt-5 mb-4">¿Qué nos hace diferentes?</h4>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-gem"></i></div>
+                    <h5>Calidad Garantizada</h5>
+                    <p class="text-muted">Cada producto pasa por rigurosos controles de calidad antes de llegar a tus manos.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-truck"></i></div>
+                    <h5>Envíos Seguros</h5>
+                    <p class="text-muted">Entregas rápidas y con total trazabilidad gracias a nuestra red logística.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-headset"></i></div>
+                    <h5>Atención Personalizada</h5>
+                    <p class="text-muted">Nuestro equipo está siempre disponible para resolver tus dudas y ayudarte a encontrar lo que buscas.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-leaf"></i></div>
+                    <h5>Compromiso Sostenible</h5>
+                    <p class="text-muted">Trabajamos con proveedores que comparten nuestra visión de responsabilidad ambiental y social.</p>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h4>Nuestra Trayectoria</h4>
+                    <div class="d-flex flex-wrap justify-content-around mt-4">
+                        <div class="text-center m-3">
+                            <h2 class="fw-bold" style="color: var(--accent-color);">+15,000</h2>
+                            <p class="text-muted">Clientes satisfechos</p>
+                        </div>
+                        <div class="text-center m-3">
+                            <h2 class="fw-bold" style="color: var(--accent-color);">5</h2>
+                            <p class="text-muted">Años de experiencia</p>
+                        </div>
+                        <div class="text-center m-3">
+                            <h2 class="fw-bold" style="color: var(--accent-color);">+50</h2>
+                            <p class="text-muted">Marcas aliadas</p>
+                        </div>
+                        <div class="text-center m-3">
+                            <h2 class="fw-bold" style="color: var(--accent-color);">+2,000</h2>
+                            <p class="text-muted">Productos disponibles</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer" id="mainFooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <h4 class="logo mb-3"><i class="fas fa-gem"></i> <span id="footerStoreName">K'A Boutique</span></h4>
+                    <p>Tu tienda online de confianza para productos exclusivos de alta calidad.</p>
+                    <div class="mt-3">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-twitter fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Categorías</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white-50 text-decoration-none">Joyas</a></li>
+                        <li><a href="index.html" class="text-white-50 text-decoration-none">Vestimenta</a></li>
+                        <li><a href="index.html" class="text-white-50 text-decoration-none">Perfumes</a></li>
+                        <li><a href="index.html" class="text-white-50 text-decoration-none">Accesorios</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Contacto</h5>
+                    <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i> <span id="footerAddress">Av. Principal 123, Ciudad</span></p>
+                    <p class="mb-1"><i class="fas fa-phone me-2"></i> <span id="footerPhone">+1 234 567 890</span></p>
+                    <p class="mb-1"><i class="fas fa-envelope me-2"></i> <span id="footerEmail">info@luxuryshop.com</span></p>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Información</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="acerca.html" class="text-white-50 text-decoration-none">Acerca de Nosotros</a></li>
+                        <li><a href="contacto.html" class="text-white-50 text-decoration-none">Contáctenos</a></li>
+                        <li><a href="politicas.html" class="text-white-50 text-decoration-none">Políticas de Privacidad</a></li>
+                        <li><a href="mision.html" class="text-white-50 text-decoration-none">Misión</a></li>
+                        <li><a href="vision.html" class="text-white-50 text-decoration-none">Visión</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="bg-white-50">
+            <div class="text-center pt-3">
+                <p class="mb-0">&copy; <span id="copyrightYear">2023</span> <span id="copyrightName">K'A Boutique</span>. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyANa6zWkGrYQ7O7M6XT2oYbArsZIcs36M8",
+            authDomain: "trip-a9341.firebaseapp.com",
+            databaseURL: "https://trip-a9341-default-rtdb.firebaseio.com",
+            projectId: "trip-a9341",
+            storageBucket: "trip-a9341.appspot.com",
+            messagingSenderId: "379336201132",
+            appId: "1:379336201132:web:34b0b863c3462c12aba009",
+            measurementId: "G-PJQ32ZXJ0B"
+        };
+
+        let firebaseApp, firebaseDatabase;
+        
+        try {
+            firebaseApp = firebase.initializeApp(firebaseConfig);
+            firebaseDatabase = firebase.database();
+            console.log("Firebase inicializado correctamente");
+        } catch (error) {
+            console.error("Error inicializando Firebase:", error);
+        }
+
+        function loadStoreSettings() {
+            if (!firebaseDatabase) return;
+            firebaseDatabase.ref('settings').once('value').then(snapshot => {
+                const settings = snapshot.val() || {};
+                const general = settings.general || {};
+                
+                document.title = general.storeName || 'Acerca de Nosotros - K'A Boutique';
+                
+                const storeNameHeader = document.getElementById('storeNameHeader');
+                const aboutStoreName = document.getElementById('aboutStoreName');
+                const footerStoreName = document.getElementById('footerStoreName');
+                const copyrightName = document.getElementById('copyrightName');
+                const historyStoreName = document.getElementById('historyStoreName');
+                
+                const storeName = general.storeName || 'K'A Boutique';
+                if (storeNameHeader) storeNameHeader.textContent = storeName;
+                if (aboutStoreName) aboutStoreName.textContent = storeName;
+                if (footerStoreName) footerStoreName.textContent = storeName;
+                if (copyrightName) copyrightName.textContent = storeName;
+                if (historyStoreName) historyStoreName.textContent = storeName;
+                
+                const footerAddress = document.getElementById('footerAddress');
+                const footerPhone = document.getElementById('footerPhone');
+                const footerEmail = document.getElementById('footerEmail');
+                
+                if (footerAddress) footerAddress.textContent = general.storeAddress || 'Av. Principal 123, Ciudad';
+                if (footerPhone) footerPhone.textContent = general.storePhone || '+1 234 567 890';
+                if (footerEmail) footerEmail.textContent = general.storeEmail || 'info@luxuryshop.com';
+                
+                const copyrightYear = document.getElementById('copyrightYear');
+                if (copyrightYear) copyrightYear.textContent = new Date().getFullYear();
+            }).catch(error => console.error('Error cargando configuración:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStoreSettings();
+        });
+    </script>
+</body>
+</html>
