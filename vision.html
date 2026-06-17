@@ -3,18 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Visión - K'A Boutique</title>
-
-    <!-- Firebase 8.10.1 -->
+    <title>Visión</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-
-    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
         :root {
             --primary-color: #4361ee;
@@ -118,6 +112,10 @@
             color: var(--primary-color);
             margin-right: 15px;
         }
+        .loading-placeholder {
+            color: #999;
+            font-style: italic;
+        }
         @media (max-width: 768px) {
             .vision-container {
                 padding: 25px;
@@ -131,7 +129,7 @@
         <nav class="navbar navbar-expand-lg navbar-light py-3">
             <div class="container">
                 <a class="navbar-brand logo" href="index.html">
-                    <i class="fas fa-gem me-2"></i><span id="storeNameHeader">K'A Boutique</span>
+                    <i class="fas fa-gem me-2"></i><span id="storeNameHeader">Cargando...</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
@@ -207,7 +205,7 @@
                     <div class="border rounded-3 p-4 h-100">
                         <i class="fas fa-globe-americas fa-2x mb-3" style="color: var(--primary-color);"></i>
                         <h5>Alcance internacional</h5>
-                        <p class="text-muted">Queremos que <span id="visionStoreName1">K'A Boutique</span> sea reconocida más allá de nuestras fronteras, llevando diseño latinoamericano al mundo.</p>
+                        <p class="text-muted">Queremos que <span id="visionStoreName1">Cargando...</span> sea reconocida más allá de nuestras fronteras, llevando diseño latinoamericano al mundo.</p>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -222,7 +220,7 @@
             <div class="mt-5 p-4 bg-light rounded-3 text-center">
                 <i class="fas fa-quote-left fa-2x" style="color: var(--primary-color); opacity: 0.2;"></i>
                 <h5 class="fw-bold mt-2">"No solo vendemos productos, creamos experiencias que perduran."</h5>
-                <p class="text-muted mb-0">— Equipo <span id="visionStoreName2">K'A Boutique</span></p>
+                <p class="text-muted mb-0">— Equipo <span id="visionStoreName2">Cargando...</span></p>
             </div>
         </div>
     </main>
@@ -231,12 +229,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3 mb-4">
-                    <h4 class="logo mb-3"><i class="fas fa-gem"></i> <span id="footerStoreName">K'A Boutique</span></h4>
-                    <p>Tu tienda online de confianza para productos exclusivos de alta calidad.</p>
+                    <h4 class="logo mb-3"><i class="fas fa-gem"></i> <span id="footerStoreName">Cargando...</span></h4>
+                    <p id="footerDescription">Cargando...</p>
                     <div class="mt-3">
-                        <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
-                        <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
-                        <a href="#" class="text-white"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-white me-3" id="socialFacebook"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-white me-3" id="socialInstagram"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-white me-3" id="socialTwitter"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-white" id="socialTiktok"><i class="fab fa-tiktok fa-lg"></i></a>
+                        <a href="#" class="text-white" id="socialYoutube"><i class="fab fa-youtube fa-lg"></i></a>
                     </div>
                 </div>
                 <div class="col-md-3 mb-4">
@@ -250,9 +250,9 @@
                 </div>
                 <div class="col-md-3 mb-4">
                     <h5 class="mb-3">Contacto</h5>
-                    <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i> <span id="footerAddress">Av. Principal 123, Ciudad</span></p>
-                    <p class="mb-1"><i class="fas fa-phone me-2"></i> <span id="footerPhone">+1 234 567 890</span></p>
-                    <p class="mb-1"><i class="fas fa-envelope me-2"></i> <span id="footerEmail">quezadaa382@gmail.com</span></p>
+                    <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i> <span id="footerAddress">Cargando...</span></p>
+                    <p class="mb-1"><i class="fas fa-phone me-2"></i> <span id="footerPhone">Cargando...</span></p>
+                    <p class="mb-1"><i class="fas fa-envelope me-2"></i> <span id="footerEmail">Cargando...</span></p>
                 </div>
                 <div class="col-md-3 mb-4">
                     <h5 class="mb-3">Información</h5>
@@ -267,28 +267,24 @@
             </div>
             <hr class="bg-white-50">
             <div class="text-center pt-3">
-                <p class="mb-0">&copy; <span id="copyrightYear">2023</span> <span id="copyrightName">K'A Boutique</span>. Todos los derechos reservados.</p>
+                <p class="mb-0">&copy; <span id="copyrightYear">2023</span> <span id="copyrightName">Cargando...</span>. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script>
-		const firebaseConfig = {
-		  apiKey: "AIzaSyDRLnS3dcieybMTVqgVJtUuf4E5xBC9HXQ",
-		  authDomain: "k-a-boutique.firebaseapp.com",
-		  databaseURL: "https://k-a-boutique-default-rtdb.firebaseio.com",
-		  projectId: "k-a-boutique",
-		  storageBucket: "k-a-boutique.firebasestorage.app",
-		  messagingSenderId: "163536158997",
-		  appId: "1:163536158997:web:d7f6d2c6481196e489691c",
-		  measurementId: "G-HKZ2KCQWMF"
-		};
-
-
+        const firebaseConfig = {
+            apiKey: "AIzaSyDRLnS3dcieybMTVqgVJtUuf4E5xBC9HXQ",
+            authDomain: "k-a-boutique.firebaseapp.com",
+            databaseURL: "https://k-a-boutique-default-rtdb.firebaseio.com",
+            projectId: "k-a-boutique",
+            storageBucket: "k-a-boutique.firebasestorage.app",
+            messagingSenderId: "163536158997",
+            appId: "1:163536158997:web:d7f6d2c6481196e489691c",
+            measurementId: "G-HKZ2KCQWMF"
+        };
         let firebaseApp, firebaseDatabase;
-        
         try {
             firebaseApp = firebase.initializeApp(firebaseConfig);
             firebaseDatabase = firebase.database();
@@ -297,40 +293,53 @@
             console.error("Error inicializando Firebase:", error);
         }
 
+        function applySettings(settings) {
+            const general = settings.general || {};
+            const social = settings.social || {};
+
+            const storeName = general.storeName || '';
+            const storeAddress = general.storeAddress || '';
+            const storePhone = general.storePhone || '';
+            const storeEmail = general.storeEmail || '';
+
+            document.title = storeName ? `Visión - ${storeName}` : 'Visión';
+
+            document.getElementById('storeNameHeader').textContent = storeName || 'No disponible';
+            document.getElementById('visionStoreName1').textContent = storeName || 'No disponible';
+            document.getElementById('visionStoreName2').textContent = storeName || 'No disponible';
+
+            // Redes sociales
+            document.getElementById('socialFacebook').href = social.facebook || '#';
+            document.getElementById('socialInstagram').href = social.instagram || '#';
+            document.getElementById('socialTwitter').href = social.twitter || '#';
+            document.getElementById('socialTiktok').href = social.tiktok || '#';
+            document.getElementById('socialYoutube').href = social.youtube || '#';
+
+            // Footer
+            document.getElementById('footerStoreName').textContent = storeName || 'No disponible';
+            document.getElementById('footerDescription').textContent = storeName ? `Tu tienda online de confianza para productos exclusivos de alta calidad.` : '';
+            document.getElementById('footerAddress').textContent = storeAddress || 'No disponible';
+            document.getElementById('footerPhone').textContent = storePhone || 'No disponible';
+            document.getElementById('footerEmail').textContent = storeEmail || 'No disponible';
+            document.getElementById('copyrightName').textContent = storeName || 'No disponible';
+            document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+
+            console.log('Datos aplicados en visión:', { storeName, storeAddress, storePhone, storeEmail, social });
+        }
+
         function loadStoreSettings() {
-            if (!firebaseDatabase) return;
-            firebaseDatabase.ref('settings').once('value').then(snapshot => {
-                const settings = snapshot.val() || {};
-                const general = settings.general || {};
-                
-                document.title = general.storeName || 'Visión - K'A Boutique';
-                
-                const storeName = general.storeName || 'K'A Boutique';
-                const storeAddress = general.storeAddress || 'Av. Principal 123, Ciudad';
-                const storePhone = general.storePhone || '+1 234 567 890';
-                const storeEmail = general.storeEmail || 'quezadaa382@gmail.com';
-                
-                const storeNameHeader = document.getElementById('storeNameHeader');
-                const visionStoreName1 = document.getElementById('visionStoreName1');
-                const visionStoreName2 = document.getElementById('visionStoreName2');
-                const footerStoreName = document.getElementById('footerStoreName');
-                const copyrightName = document.getElementById('copyrightName');
-                const footerAddress = document.getElementById('footerAddress');
-                const footerPhone = document.getElementById('footerPhone');
-                const footerEmail = document.getElementById('footerEmail');
-                
-                if (storeNameHeader) storeNameHeader.textContent = storeName;
-                if (visionStoreName1) visionStoreName1.textContent = storeName;
-                if (visionStoreName2) visionStoreName2.textContent = storeName;
-                if (footerStoreName) footerStoreName.textContent = storeName;
-                if (copyrightName) copyrightName.textContent = storeName;
-                if (footerAddress) footerAddress.textContent = storeAddress;
-                if (footerPhone) footerPhone.textContent = storePhone;
-                if (footerEmail) footerEmail.textContent = storeEmail;
-                
-                const copyrightYear = document.getElementById('copyrightYear');
-                if (copyrightYear) copyrightYear.textContent = new Date().getFullYear();
-            }).catch(error => console.error('Error cargando configuración:', error));
+            if (!firebaseDatabase) {
+                console.warn('Firebase Database no disponible');
+                return;
+            }
+            firebaseDatabase.ref('settings').once('value')
+                .then(snapshot => {
+                    const settings = snapshot.val() || {};
+                    applySettings(settings);
+                })
+                .catch(error => {
+                    console.error('Error cargando configuración:', error);
+                });
         }
 
         document.addEventListener('DOMContentLoaded', function() {
